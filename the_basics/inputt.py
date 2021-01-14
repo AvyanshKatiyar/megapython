@@ -1,9 +1,9 @@
-#storithere=input("Enter sexx: ")
+#storithere=input("Enter : ")
 
 #print(storithere)
 #input is string
 
-#storithere=int(input("Enter sexx: "))
+#storithere=int(input("Enter : "))
 #now it is int
 
 #user_input=input("Enter your name: ")
