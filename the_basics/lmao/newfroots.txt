@@ -1,0 +1,9 @@
+pear
+apple 
+orange
+hello
+this
+is 
+not 
+a
+fruit
