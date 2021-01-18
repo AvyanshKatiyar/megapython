@@ -1,0 +1,3 @@
+([('frontend',
+   '/Users/avyanshkatiyar/Desktop/udemy/app4/dist/frontend',
+   'EXECUTABLE')],)
