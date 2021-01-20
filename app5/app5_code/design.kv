@@ -1,0 +1,100 @@
+<LoginScreen>:
+
+# 2 grids in a grid run to understans
+#GridLayout, Label, TextInput, Button are python classes 
+# LoginScreen and RootWidget are objects repped by classes
+#from kivy.uix.gridlayput import GridLayout then that object is imported
+
+    GridLayout:
+        cols:1
+        GridLayout:
+            cols:1
+            Label:
+                text: "User Login"
+            TextInput:
+                id: username
+
+                hint_text:"Username"
+            TextInput:
+                id: password
+ 
+                hint_text:"Password"
+            Label:
+                id: login_wrong
+                text: ""                
+            Button:
+                text:"Login"
+                on_press: root.login(root.ids.username.text,root.ids.password.text)
+              
+
+
+        GridLayout:
+            cols: 2
+
+            Button:
+                text: "Forgot Password?"
+
+            Button:
+                text:"Sign Up"
+                on_press: root.sign_up()
+                #root refers to class of rule i.e LoginScreen Class 
+                # Sign_Up is a method
+
+
+
+<SignUpScreen>:
+    GridLayout:
+        cols:1
+        Label:
+            text:"Brother, please sign up"
+        TextInput:
+            id:username
+            hint_text:"Username"
+        TextInput:
+            id:password
+            hint_text:"Password"
+        Button:
+            text:"Submit"
+            on_press: root.add_user(root.ids.username.text,root.ids.password.text)#root.ids.username object root.ids.username.text 
+            on_press: root.sign_up_screen_success()
+<SignUpScreenSuccess>:
+    GridLayout:
+        cols:1
+        Label:
+            text:"Sign up was a success"
+        Button:
+            text:"Login Page"
+            on_press: root.login_page()
+
+<LogInScreenSuccess>:
+    GridLayout:
+        cols:1
+       
+        Button:
+            text:"Logout"
+            on_press: root.log_out()
+
+        Label:
+            text: "How are you feeling right now?"
+        TextInput:
+            id: feeling
+            hint_text:"Things to try: happy, sad, unloved......"
+        Button:
+            text:"Click for knowledge "
+            onpress: root.get_quote(root.ids.feeling.text)
+
+        Label:
+            text: ""
+
+
+#RootWidget keeps record of all screen
+<RootWidget>:
+    #same login screen code as above i.e LoginScreen is a child of root widget
+    LoginScreen:
+        name:"login_screen"
+    SignUpScreen:
+        name:"sign_up_screen"
+    SignUpScreenSuccess:
+        name:"sign_up_screen_success"
+    LoginScreenSuccess:
+        name:"login_screen_success"
