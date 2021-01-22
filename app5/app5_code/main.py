@@ -2,7 +2,12 @@ from kivy.app import App
 from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen 
 import json, glob
+from pathlib import Path
 from datetime import datetime
+import random
+from hoverable import HoverBehavior
+from kivy.uix.image import Image
+from kivy.uix.behaviors import ButtonBehavior
 
 Builder.load_file('design.kv')
 
@@ -52,8 +57,23 @@ class LoginScreenSuccess(Screen):
         #self.manager.current="login_screen"
     def get_quote(self, feel):
         feel=feel.lower()
-        print(feel)
-        print(type(feel))
+        available_feelings=glob.glob("quotes/*txt")
+        #glob.glob gives a list of file names
+
+        #Path object extracts the filename using the extracts method
+        #creates list
+        available_feelings=[Path(filename).stem for filename in
+                            available_feelings]
+
+        #print(available_feelings)
+        
+        if feel in available_feelings:
+            with open(f"quotes/{feel}.txt") as file:
+                quotes= file.readlines()
+            self.ids.quote.text= random.choice(quotes) 
+        else:
+            self.ids.quote.text = "Try another feeling we support happy, sad, unloved "
+        
 
 class RootWidget(ScreenManager):
     pass
@@ -63,6 +83,11 @@ class MainApp(App):
     def build(self):
         #Initialization of RootWidget no declaring class
         return RootWidget()
+
+#button behaviour first as placing other classes first may hide that behaviour
+class ImageButton( ButtonBehavior,HoverBehavior, Image):
+    pass
+
 
 
 

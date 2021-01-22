@@ -4,47 +4,72 @@
 #GridLayout, Label, TextInput, Button are python classes 
 # LoginScreen and RootWidget are objects repped by classes
 #from kivy.uix.gridlayput import GridLayout then that object is imported
-
+#initially space is equally divided
     GridLayout:
         cols:1
         GridLayout:
             cols:1
+            #padding is the difference between outer grid and this
+            #grid
+            
+            padding: 15, 15
+            #space between children
+            spacing: 20, 20
             Label:
                 text: "User Login"
+                font_size: '20sp' #space independant pixels
             TextInput:
                 id: username
 
                 hint_text:"Username"
             TextInput:
                 id: password
- 
+                password: True #changes from text to hidden
                 hint_text:"Password"
             Label:
                 id: login_wrong
                 text: ""                
-            Button:
-                text:"Login"
-                on_press: root.login(root.ids.username.text,root.ids.password.text)
+            RelativeLayout:
+                Button:
+                    text:"Login"
+                    on_press: root.login(root.ids.username.text,root.ids.password.text)
+                    size_hint: 0.3, 0.5 #30% hspace and 50% vspace
+                    pos_hint: {'center_x':0.5, 'center_y': 0.6}
+            Label:
+                id:login_wrong
+                text:""
               
 
 
         GridLayout:
             cols: 2
-
+            size_hint: 0.5, 0.2 #
+            padding: 10, 10 #horizontal vertical
+            spacing: 10, 0 # horizontal, verical does not exist so anything
             Button:
                 text: "Forgot Password?"
+                background_color: 1, 1, 1, 0 # rgb + transperancy
+                #root refers to class of rule i.e LoginScreen Class 
+                # Sign_Up is a method
+                opacity: 1 if self.state == 'normal' else 0.5 #self is button
+                color: 0.1, 0.7, 1, 1
 
             Button:
                 text:"Sign Up"
                 on_press: root.sign_up()
+                background_color: 1, 1, 1, 0 # rgb + transperancy
                 #root refers to class of rule i.e LoginScreen Class 
                 # Sign_Up is a method
+                opacity: 1 if self.state == 'normal' else 0.5 #self is button
+                color: 0.1, 0.7, 1, 1
 
 
 
 <SignUpScreen>:
     GridLayout:
         cols:1
+        padding: 20, 20
+        spacing: 20, 20
         Label:
             text:"Brother, please sign up"
         TextInput:
@@ -55,7 +80,8 @@
             hint_text:"Password"
         Button:
             text:"Submit"
-            on_press: root.add_user(root.ids.username.text,root.ids.password.text)#root.ids.username object root.ids.username.text 
+            on_press: root.add_user(root.ids.username.text,root.ids.password.text)
+            #root.ids.username object root.ids.username.text 
             on_press: root.sign_up_screen_success()
 <SignUpScreenSuccess>:
     GridLayout:
@@ -69,10 +95,14 @@
 <LogInScreenSuccess>:
     GridLayout:
         cols:1
-       
-        Button:
-            text:"Logout"
-            on_press: root.log_out()
+        padding: 30, 30
+        spacing: 100000, 30#note no effect by changing horizontal
+        RelativeLayout:    
+            ImageButton:
+                on_press: root.log_out()
+                source: 'logout_hover.png' if self.hovered else "logout_nothover.png"
+                size_hint: 0.35, 0.35#percent of the amount allocated intially 
+                pos_hint:{'center_x':0.93, 'center_y':0.8}
 
         Label:
             text: "How are you feeling right now?"
@@ -81,10 +111,21 @@
             hint_text:"Things to try: happy, sad, unloved......"
         Button:
             text:"Click for knowledge "
-            onpress: root.get_quote(root.ids.feeling.text)
+            on_press: root.get_quote(root.ids.feeling.text)
+        ScrollView:
+            Label:
+                id: quote
+                text: ""
+                text_size: self.width, None
+                #depends upon the size of the Label(self)
+                #self.width, none causes it ooverflow when compressed
+                size_hint_y: None #label
+                #self.texture_size contains the (width, height) of the tupple
+                # 
+                height: self.texture_size[1]
 
-        Label:
-            text: ""
+
+
 
 
 #RootWidget keeps record of all screen
