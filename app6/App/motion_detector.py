@@ -1,4 +1,8 @@
 import cv2, time, pandas
+from datetime import datetime
+
+
+
 
 #number is used to choose input method
 video=cv2.VideoCapture(0)
@@ -11,6 +15,10 @@ first_first_frame=None
 first_frame=None 
 #declaring a var
 
+
+#as we are seeing -1 and -2
+status_list=[None, None]
+times=[]
 while True:
     #reads on frame
 
@@ -25,7 +33,7 @@ while True:
     #init
     if first_first_frame is None:
         first_first_frame=gray
-        time.sleep(5)
+        time.sleep(2)
         #means go back to top while
         continue
    
@@ -34,10 +42,9 @@ while True:
         #means go back to top while
         continue
     
-    status=1
     #absolute difference
     delta_frame=cv2.absdiff(first_frame, gray)
-    print(delta_frame)
+    #print(delta_frame)
     #if above 30 then convert to 255
     thresh_frame=cv2.threshold(delta_frame, 30, 255, cv2.THRESH_BINARY)[1]
     
@@ -51,12 +58,25 @@ while True:
     for contour in cnts:
         if cv2.contourArea(contour)<10000:
             continue
+        status=1
+
 
         (x, y, w,h)=cv2.boundingRect(contour)
         #drawing on color frome
         cv2.rectangle(frame, (x,y), (x+w,y+h), (0,255,0),3)
 
+    #since we only need the last two status items
+    status_list=status_list[-2:]
     
+    status_list.append(status)
+    #
+    if status_list[-1]==1 and status_list[-2]==0:
+        times.append(datetime.now())
+    elif status_list[-1]==0 and status_list[-2]==1:
+        times.append(datetime.now())
+
+
+
 
 
     
@@ -71,9 +91,24 @@ while True:
     key=cv2.waitKey(1)
 
     if key==ord("q"):
+        if status==1:
+            times.append(datetime.now())
         break
-    #print(status)
+    print(status)
+    
 
+
+print(status_list)
 video.release()
 cv2.destroyAllWindows()
 
+
+
+#importing to pandas
+
+df=pandas.DataFrame(columns=["Start", "End"])
+
+for a in range(0,len(times), 2):
+    df=df.append({"Start": times[a], "End": times[a+1]}, ignore_index=True)
+
+df.to_csv("TImes.csv")

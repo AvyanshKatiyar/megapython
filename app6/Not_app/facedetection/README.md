@@ -3,7 +3,7 @@
 
 ##  capture.py
 
-Input from webacam or any video input and basic processing.
+Input from webacam or any video input and basic processing. Press q to exit the window.
 
 ## facedetection.py
 
