@@ -30,3 +30,7 @@ virtual environment first
 
 install gunicornss
 pip freeze > requirements.txt
+
+
+heroku git:remote --app avidbase
+git push heroku master
