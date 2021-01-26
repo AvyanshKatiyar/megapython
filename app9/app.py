@@ -15,12 +15,12 @@ from sqlalchemy.sql import func
 app=Flask(__name__)
 
 #making connection to the database
-app.config["SQLALCHEMY_DATABASE_URI"]="postgresql://postgres:postgres1234@localhost:5433/height_collector"
+#app.config["SQLALCHEMY_DATABASE_URI"]="postgresql://postgres:postgres1234@localhost:5433/height_collector"
 #local host was missing
 
 #heroku dbase
 #?sslmode=require
-#app.config["SQLALCHEMY_DATABASE_URI"]="postgres://xvelxqcbmxgxjd:9dd39d36b58835f3939857f58f40765d3a39c747889d7598cf2fe7f207418331@ec2-3-214-4-151.compute-1.amazonaws.com:5432/d2kfnk64rtkhr8?sslmode=require"
+app.config["SQLALCHEMY_DATABASE_URI"]="postgres://xvelxqcbmxgxjd:9dd39d36b58835f3939857f58f40765d3a39c747889d7598cf2fe7f207418331@ec2-3-214-4-151.compute-1.amazonaws.com:5432/d2kfnk64rtkhr8?sslmode=require"
 db=SQLAlchemy(app)
 
 class Data(db.Model):
