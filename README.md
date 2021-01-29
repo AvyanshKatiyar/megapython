@@ -8,5 +8,4 @@ Further readmes in each folder to clarify execution installation etc..
 ## App9
 Note that app9 contains a git repo by itself so it has been uploaded seperately.
 
-#
-The master repo can be accessed by clicking this [link](https://github.com/AvyanshKatiyar/megapython/tree/master) .
+
