@@ -7,7 +7,5 @@ Further readmes in each folder to clarify execution installation etc..
 
 Not app code does not contain any apps rather the learning material that was required before the course taught us to build apps.
 
-## App9
-Note that app9 contains a git repo by itself so it has been uploaded seperately.
 
 
